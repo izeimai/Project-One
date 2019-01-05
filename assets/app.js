@@ -133,7 +133,7 @@ $(document).ready(function () {
           $("<td>").text(snapStreet),
           $("<td>").text(distanceTo),
           $("<td>").text(snap.hours),
-          $("<td>").text("Kevin: need the calculated end time here"),
+          $("<td>").text(tWhenuserleaves),
           $("<td>").append(selectBtn)
         );
 

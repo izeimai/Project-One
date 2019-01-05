@@ -34,7 +34,9 @@ $("#enterform").on("click", function (event) {
   state = state[1] + state[2]; // just need the two letter acronym e.g. PA from the state address field
   console.log("This is the state address before storing: " + state);
   zip = $("#zip_code_address").val().trim();
-  hours = $("#hoursAvailable").val().trim();
+  hours = moment($("#hoursAvailable").val().trim(), "HH:mm").subtract(1, "hours");
+
+
 
 
   // Clear local storage and store the address to local storage
@@ -107,30 +109,30 @@ database.ref("users").on("child_added", function (snapshot) {
 });
 
 
+//Get the time selection of how many hours the users will be up for study
 
 
-// $(document).ready(function() {
-
-    //clearing out the time in the time once the time limit has been met the database
-
-    //this is what will make the timer go down when the user clicks it which will start the timer from the submit button from the front screen
-
-    //This is what will happen when the user pushes the button and page/timer for what user put in for time will start to count down
-//     $("#start").on("click", function() {
-//         $("start").hide();
-//         start(i=0);
-//     })
-
-//     //Timer on the page that will start going down but will be hidden in backgroudn
-//     function run() {
-//         intervalId = setInterval(decrement, 1000);
-//     }
-
-//     function decrement() {
-//         number--;
-//         console.log(run);
 
 
-//     }
 
-// })
+database.ref('hours').on("child_added", function(childSnapshot) {
+
+  let data = childSnapshot.val();
+  let tCurrent = data.users;
+  let tRemain = data.hours;
+  console.log(tRemain);
+
+  let tRemainder = moment().diff(moment.unix(tRemain), "minutes") % tCurrent;
+  let tMinutes = tCurrent - tRemainder;
+
+  let tWhenuserleaves = moment().add(tMinutes, "m").format("HH:mm");
+  console.log(tWhenuserleaves);
+
+
+})
+
+var current_time = new moment().format("HH:mm");
+console.log(current_time);
+
+
+
